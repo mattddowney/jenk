@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/mattddowney/jenk/jenkins"
 	"github.com/spf13/cobra"
 )
 
@@ -29,6 +30,8 @@ var abortInputCmd = &cobra.Command{
 		} else {
 			return errors.New("<job_name>, <build_number>, and <input_id> required")
 		}
+
+		jenkins.GetCrumb()
 
 		return nil
 	},
