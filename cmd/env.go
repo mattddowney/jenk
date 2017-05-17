@@ -18,9 +18,9 @@ var envCmd = &cobra.Command{
 These are used to interact with your Jenkins installation.
 Environment variables override the default config at $HOME/.jenk.yaml`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("JENKINS_ROOT_URL=%s\n", viper.Get("root_url"))
-		fmt.Printf("JENKINS_TOKEN=%s\n", viper.Get("token"))
-		fmt.Printf("JENKINS_USER_NAME=%s\n", viper.Get("user_name"))
+		fmt.Printf("JENKINS_ROOT_URL=%s\n", viper.GetString("jenkins_root_url"))
+		fmt.Printf("JENKINS_TOKEN=%s\n", viper.GetString("jenkins_token"))
+		fmt.Printf("JENKINS_USER_NAME=%s\n", viper.GetString("jenkins_user_name"))
 	},
 }
 

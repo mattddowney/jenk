@@ -63,9 +63,6 @@ func initConfig() {
 		viper.SetConfigName(".jenk")
 	}
 
-	// environment variables prefixed with JENKINS_
-	viper.SetEnvPrefix("jenkins")
-
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
