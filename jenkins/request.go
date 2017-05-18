@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/spf13/viper"
 )
 
-func Request(method string, url string, body string) (int, string, string, error) {
+func Request(method string, url string, body *url.Values) (int, string, string, error) {
 	var user = viper.GetString("JENKINS_USER_NAME")
 	var token = viper.GetString("JENKINS_TOKEN")
 	var rootURL = viper.GetString("JENKINS_ROOT_URL")
@@ -34,7 +35,7 @@ func Request(method string, url string, body string) (int, string, string, error
 	client := &http.Client{Timeout: time.Second}
 
 	// convert body into a buffer
-	bodyBuff := bytes.NewBufferString(body)
+	bodyBuff := bytes.NewBufferString(body.Encode())
 
 	// form the request
 	req, err := http.NewRequest(method, url, bodyBuff)
@@ -42,8 +43,9 @@ func Request(method string, url string, body string) (int, string, string, error
 		return 400, "400", "", err
 	}
 
-	// add the crumb as a header
+	// add headers
 	req.Header.Add("Jenkins-Crumb", crumb)
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	// setup auth
 	req.SetBasicAuth(user, token)
