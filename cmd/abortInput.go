@@ -40,13 +40,18 @@ var abortInputCmd = &cobra.Command{
 			url := "/job/" + jobName + "/" + buildNumber + "/input/" + inputID + "/abort"
 
 			// issue the request
-			status, _, err := jenkins.Request("POST", url)
+			statusCode, status, _, err := jenkins.Request("POST", url)
 			if err != nil {
 				return err
 			}
 
 			// log status
+			fmt.Printf("StatusCode:\t%d\n", statusCode)
 			fmt.Printf("Status:\t\t%s\n", status)
+
+			if statusCode != 200 {
+				return errors.New("Request failed")
+			}
 		} else {
 			return errors.New("<job_name>, <build_number>, and <input_id> required")
 		}
