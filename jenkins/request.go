@@ -29,7 +29,7 @@ func Request(method string, url string, body *url.Values) (int, string, string, 
 	// log
 	fmt.Printf("Method:\t\t%s\n", method)
 	fmt.Printf("URL:\t\t%s\n", url)
-	fmt.Printf("Request Body:\t%s\n", body)
+	fmt.Printf("Request Body:\t%s\n", body.Encode())
 
 	// create an http client
 	client := &http.Client{Timeout: time.Second}
