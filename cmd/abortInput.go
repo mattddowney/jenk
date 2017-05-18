@@ -6,6 +6,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"net/url"
 	"unicode"
 
 	"github.com/mattddowney/jenk/jenkins"
@@ -37,10 +38,13 @@ var abortInputCmd = &cobra.Command{
 			inputID = string(inputIDRune)
 
 			// build url
-			url := "/job/" + jobName + "/" + buildNumber + "/input/" + inputID + "/abort"
+			reqURL := "/job/" + jobName + "/" + buildNumber + "/input/" + inputID + "/abort"
+
+			// create empty body
+			body := url.Values{}
 
 			// issue the request
-			statusCode, status, _, err := jenkins.Request("POST", url, nil)
+			statusCode, status, _, err := jenkins.Request("POST", reqURL, &body)
 			if err != nil {
 				return err
 			}
