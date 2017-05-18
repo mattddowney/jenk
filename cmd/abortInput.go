@@ -31,18 +31,21 @@ var abortInputCmd = &cobra.Command{
 			fmt.Printf("Build Number:\t%s\n", buildNumber)
 			fmt.Printf("Input Id:\t%s\n", inputID)
 
-			// capitalize first letter of string
+			// capitalize first letter of inputID
 			inputIDRune := []rune(inputID)
 			inputIDRune[0] = unicode.ToUpper(inputIDRune[0])
 			inputID = string(inputIDRune)
 
+			// build url
 			url := "/job/" + jobName + "/" + buildNumber + "/input/" + inputID + "/abort"
 
+			// issue the request
 			status, _, err := jenkins.Request("POST", url)
 			if err != nil {
 				return err
 			}
 
+			// log status
 			fmt.Printf("Status:\t\t%s\n", status)
 		} else {
 			return errors.New("<job_name>, <build_number>, and <input_id> required")
