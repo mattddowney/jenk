@@ -31,7 +31,12 @@ var abortInputCmd = &cobra.Command{
 			return errors.New("<job_name>, <build_number>, and <input_id> required")
 		}
 
-		jenkins.GetCrumb()
+		var crumb, err = jenkins.GetCrumb()
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("Crumb: %s\n", crumb)
 
 		return nil
 	},

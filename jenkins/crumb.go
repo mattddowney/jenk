@@ -1,7 +1,7 @@
 package jenkins
 
 import (
-	"fmt"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func GetCrumb() error {
+func GetCrumb() (string, error) {
 	var user = viper.GetString("JENKINS_USER_NAME")
 	var token = viper.GetString("JENKINS_TOKEN")
 	var rootURL = viper.GetString("JENKINS_ROOT_URL")
@@ -23,7 +23,7 @@ func GetCrumb() error {
 	// form the request
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	// setup auth
@@ -32,17 +32,24 @@ func GetCrumb() error {
 	// do the request
 	res, err := client.Do(req)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	// read the body
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		return err
+		return "", err
 	}
 	res.Body.Close()
 
-	fmt.Printf("%s", body)
+	// parse json
+	var j interface{}
+	err = json.Unmarshal(body, &j)
+	if err != nil {
+		return "", err
+	}
+	mapped := j.(map[string]interface{})
 
-	return nil
+	// return the crumb
+	return mapped["crumb"].(string), nil
 }
