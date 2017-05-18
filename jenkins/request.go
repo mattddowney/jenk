@@ -14,6 +14,7 @@ func Request(method string, url string) (int, string, string, error) {
 	var token = viper.GetString("JENKINS_TOKEN")
 	var rootURL = viper.GetString("JENKINS_ROOT_URL")
 
+	// get the crumb
 	crumbStatusCode, crumb, err := getCrumb(user, token, rootURL)
 	if err != nil {
 		fmt.Printf("!!! ERROR: Could not get crumb")
