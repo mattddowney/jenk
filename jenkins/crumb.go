@@ -62,8 +62,8 @@ func Request(method string, url string) (string, string, error) {
 	url = rootURL + url
 
 	// log
-	fmt.Printf("Method: %s\n", method)
-	fmt.Printf("URL: %s\n", url)
+	fmt.Printf("Method:\t\t%s\n", method)
+	fmt.Printf("URL:\t\t%s\n", url)
 
 	// create an http client
 	client := &http.Client{Timeout: time.Second}

@@ -26,9 +26,10 @@ var abortInputCmd = &cobra.Command{
 			var inputID string = args[2]
 
 			// log
-			fmt.Printf("Job Name: %s\n", jobName)
-			fmt.Printf("Build Number: %s\n", buildNumber)
-			fmt.Printf("Input Id: %s\n", inputID)
+			fmt.Printf("Command:\tabort-input\n")
+			fmt.Printf("Job Name:\t%s\n", jobName)
+			fmt.Printf("Build Number:\t%s\n", buildNumber)
+			fmt.Printf("Input Id:\t%s\n", inputID)
 
 			// capitalize first letter of string
 			inputIDRune := []rune(inputID)
@@ -42,7 +43,7 @@ var abortInputCmd = &cobra.Command{
 				return err
 			}
 
-			fmt.Printf("Status: %s\n", status)
+			fmt.Printf("Status:\t\t%s\n", status)
 		} else {
 			return errors.New("<job_name>, <build_number>, and <input_id> required")
 		}
