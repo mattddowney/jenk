@@ -6,6 +6,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"unicode"
 
 	"github.com/mattddowney/jenk/jenkins"
 	"github.com/spf13/cobra"
@@ -24,19 +25,27 @@ var abortInputCmd = &cobra.Command{
 			var buildNumber string = args[1]
 			var inputID string = args[2]
 
+			// log
 			fmt.Printf("Job Name: %s\n", jobName)
 			fmt.Printf("Build Number: %s\n", buildNumber)
 			fmt.Printf("Input Id: %s\n", inputID)
+
+			// capitalize first letter of string
+			inputIDRune := []rune(inputID)
+			inputIDRune[0] = unicode.ToUpper(inputIDRune[0])
+			inputID = string(inputIDRune)
+
+			url := "/job/" + jobName + "/" + buildNumber + "/input/" + inputID + "/abort"
+
+			status, _, err := jenkins.Request("POST", url)
+			if err != nil {
+				return err
+			}
+
+			fmt.Printf("Status: %s\n", status)
 		} else {
 			return errors.New("<job_name>, <build_number>, and <input_id> required")
 		}
-
-		var crumb, err = jenkins.GetCrumb()
-		if err != nil {
-			return err
-		}
-
-		fmt.Printf("Crumb: %s\n", crumb)
 
 		return nil
 	},
