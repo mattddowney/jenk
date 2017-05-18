@@ -57,6 +57,10 @@ func Request(method string, url string) (string, string, error) {
 	var rootURL = viper.GetString("JENKINS_ROOT_URL")
 
 	crumb, err := getCrumb(user, token, rootURL)
+	if err != nil {
+		fmt.Printf("!!! ERROR: Could not get crumb")
+		return "", "", err
+	}
 
 	// build url
 	url = rootURL + url
