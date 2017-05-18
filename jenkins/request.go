@@ -1,6 +1,7 @@
 package jenkins
 
 import (
+	"bytes"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -9,7 +10,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func Request(method string, url string) (int, string, string, error) {
+func Request(method string, url string, body string) (int, string, string, error) {
 	var user = viper.GetString("JENKINS_USER_NAME")
 	var token = viper.GetString("JENKINS_TOKEN")
 	var rootURL = viper.GetString("JENKINS_ROOT_URL")
@@ -27,12 +28,16 @@ func Request(method string, url string) (int, string, string, error) {
 	// log
 	fmt.Printf("Method:\t\t%s\n", method)
 	fmt.Printf("URL:\t\t%s\n", url)
+	fmt.Printf("Request Body:\t%s\n", body)
 
 	// create an http client
 	client := &http.Client{Timeout: time.Second}
 
+	// convert body into a buffer
+	bodyBuff := bytes.NewBufferString(body)
+
 	// form the request
-	req, err := http.NewRequest(method, url, nil)
+	req, err := http.NewRequest(method, url, bodyBuff)
 	if err != nil {
 		return 400, "400", "", err
 	}
@@ -50,11 +55,11 @@ func Request(method string, url string) (int, string, string, error) {
 	}
 
 	// read the body
-	body, err := ioutil.ReadAll(res.Body)
+	resBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return res.StatusCode, res.Status, "", err
 	}
 	res.Body.Close()
 
-	return res.StatusCode, res.Status, string(body), err
+	return res.StatusCode, res.Status, string(resBody), err
 }
