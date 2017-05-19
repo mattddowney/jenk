@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
-	"unicode"
 
 	"github.com/mattddowney/jenk/jenkins"
 	"github.com/spf13/cobra"
@@ -33,9 +32,7 @@ var abortInputCmd = &cobra.Command{
 			fmt.Printf("Input Id:\t%s\n", inputID)
 
 			// capitalize first letter of inputID
-			inputIDRune := []rune(inputID)
-			inputIDRune[0] = unicode.ToUpper(inputIDRune[0])
-			inputID = string(inputIDRune)
+			inputID = capitalize(inputID)
 
 			// build url
 			reqURL := "/job/" + jobName + "/" + buildNumber + "/input/" + inputID + "/abort"
