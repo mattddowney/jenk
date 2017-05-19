@@ -23,10 +23,15 @@ var createJobCmd = &cobra.Command{
 			var jobName = args[0]
 			var projectURL = args[1]
 
+			if gitURL == "" {
+				gitURL = projectURL + ".git"
+			}
+
 			// log
 			fmt.Printf("Command:\tcreate-job\n")
 			fmt.Printf("Job Name:\t%s\n", jobName)
 			fmt.Printf("Project URL:\t%s\n", projectURL)
+			fmt.Printf("Git URL:\t%s\n", gitURL)
 		} else {
 			return errors.New("<job_name> and <project_url> required")
 		}
