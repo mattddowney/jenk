@@ -15,7 +15,7 @@ import (
 
 // triggerInputCmd represents the trigger-input command
 var triggerInputCmd = &cobra.Command{
-	Use:   "trigger-input",
+	Use:   "trigger-input <job_name> <build_number> <input_id>",
 	Short: "Triggers a pipeline input",
 
 	RunE: func(cmd *cobra.Command, args []string) error {
