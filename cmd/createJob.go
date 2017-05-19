@@ -4,31 +4,40 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
+var gitURL string
+
 // createJobCmd represents the create-job command
 var createJobCmd = &cobra.Command{
-	Use:   "create-job",
+	Use:   "create-job <job_name> <project_url>",
 	Short: "A brief description of your command",
 
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("create-job called")
+		if len(args) == 2 {
+			var jobName = args[0]
+			var projectURL = args[1]
+
+			// log
+			fmt.Printf("Command:\tcreate-job\n")
+			fmt.Printf("Job Name:\t%s\n", jobName)
+			fmt.Printf("Project URL:\t%s\n", projectURL)
+		} else {
+			return errors.New("<job_name> and <project_url> required")
+		}
+
+		return nil
 	},
 }
 
 func init() {
 	RootCmd.AddCommand(createJobCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// createJobCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// createJobCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// flags
+	createJobCmd.Flags().StringVarP(&gitURL, "git-url", "g", "", "git URL (defaults to <project_url>.git)")
 }
