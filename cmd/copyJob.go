@@ -12,7 +12,7 @@ import (
 
 // copyJobCmd represents the copy-job command
 var copyJobCmd = &cobra.Command{
-	Use:   "copy-job",
+	Use:   "copy-job <from_job_name> <new_job_name>",
 	Short: "Copy a Jenkins job",
 
 	RunE: func(cmd *cobra.Command, args []string) error {
