@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"time"
@@ -19,7 +20,7 @@ func Request(method string, url string, body *url.Values) (int, string, string, 
 	// get the crumb
 	crumbStatusCode, crumb, err := getCrumb(user, token, rootURL)
 	if err != nil {
-		fmt.Printf("!!! ERROR: Could not get crumb")
+		log.Println("!!! ERROR: Could not get crumb")
 		return crumbStatusCode, "", "", err
 	}
 
