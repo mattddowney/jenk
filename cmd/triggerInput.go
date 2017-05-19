@@ -38,6 +38,7 @@ var triggerInputCmd = &cobra.Command{
 			// build url
 			reqURL := "/job/" + jobName + "/" + buildNumber + "/wfapi/inputSubmit?inputId=" + inputID
 
+			// create body
 			body := url.Values{}
 			body.Set("json", "{\"parameter\": []}")
 
