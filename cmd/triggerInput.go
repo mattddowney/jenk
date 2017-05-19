@@ -36,13 +36,13 @@ var triggerInputCmd = &cobra.Command{
 			inputID = string(inputIDRune)
 
 			// build url
-			reqUrl := "/job/" + jobName + "/" + buildNumber + "/wfapi/inputSubmit?inputId=" + inputID
+			reqURL := "/job/" + jobName + "/" + buildNumber + "/wfapi/inputSubmit?inputId=" + inputID
 
 			body := url.Values{}
 			body.Set("json", "{\"parameter\": []}")
 
 			// issue the request
-			statusCode, status, _, err := jenkins.Request("POST", reqUrl, &body)
+			statusCode, status, _, err := jenkins.Request("POST", reqURL, &body)
 			if err != nil {
 				return err
 			}
