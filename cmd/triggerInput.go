@@ -44,7 +44,7 @@ var triggerInputCmd = &cobra.Command{
 			bodyBuff := bytes.NewBufferString(body.Encode())
 
 			// issue the request
-			statusCode, status, _, err := jenkins.Request("POST", reqURL, bodyBuff)
+			statusCode, status, _, err := jenkins.Request("POST", reqURL, "application/x-www-form-urlencoded", bodyBuff)
 			if err != nil {
 				return err
 			}

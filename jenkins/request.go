@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func Request(method string, url string, body *bytes.Buffer) (int, string, string, error) {
+func Request(method string, url string, contentType string, body *bytes.Buffer) (int, string, string, error) {
 	var user = viper.GetString("JENKINS_USER_NAME")
 	var token = viper.GetString("JENKINS_TOKEN")
 	var rootURL = viper.GetString("JENKINS_ROOT_URL")
@@ -46,7 +46,7 @@ func Request(method string, url string, body *bytes.Buffer) (int, string, string
 
 	// add headers
 	req.Header.Add("Jenkins-Crumb", crumb)
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Content-Type", contentType)
 
 	// setup auth
 	req.SetBasicAuth(user, token)
