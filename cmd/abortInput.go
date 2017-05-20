@@ -4,6 +4,7 @@
 package cmd
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"net/url"
@@ -39,9 +40,10 @@ var abortInputCmd = &cobra.Command{
 
 			// create empty body
 			body := url.Values{}
+			bodyBuff := bytes.NewBufferString(body.Encode())
 
 			// issue the request
-			statusCode, status, _, err := jenkins.Request("POST", reqURL, &body)
+			statusCode, status, _, err := jenkins.Request("POST", reqURL, bodyBuff)
 			if err != nil {
 				return err
 			}

@@ -4,6 +4,7 @@
 package cmd
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"net/url"
@@ -33,9 +34,10 @@ var copyJobCmd = &cobra.Command{
 			// create body
 			body := url.Values{}
 			body.Set("json", "{\"parameter\": []}")
+			bodyBuff := bytes.NewBufferString(body.Encode())
 
 			// issue the request
-			statusCode, status, _, err := jenkins.Request("POST", reqURL, &body)
+			statusCode, status, _, err := jenkins.Request("POST", reqURL, bodyBuff)
 			if err != nil {
 				return err
 			}
