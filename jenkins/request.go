@@ -29,14 +29,10 @@ func Request(method string, url string, contentType string, body *bytes.Buffer) 
 	// log
 	fmt.Printf("Method:\t\t%s\n", method)
 	fmt.Printf("URL:\t\t%s\n", url)
-	//fmt.Printf("Request Body:\t%s\n", body.Encode())
 	fmt.Printf("Request Body:\t%s\n", body)
 
 	// create an http client
 	client := &http.Client{Timeout: time.Second}
-
-	// convert body into a buffer
-	//bodyBuff := bytes.NewBufferString(body.Encode())
 
 	// form the request
 	req, err := http.NewRequest(method, url, body)
