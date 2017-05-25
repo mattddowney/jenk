@@ -18,7 +18,7 @@ var gitURL string
 // createJobCmd represents the create-job command
 var createJobCmd = &cobra.Command{
 	Use:   "create-job <job_name> <project_url>",
-	Short: "A brief description of your command",
+	Short: "Create a Jenkins job",
 
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("create-job called")
