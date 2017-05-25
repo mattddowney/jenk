@@ -39,7 +39,7 @@ Usage:
 Available Commands:
   abort-input   Aborts a pipeline input
   copy-job      Copy a Jenkins job
-  create-job    A brief description of your command
+  create-job    Create a Jenkins job
   env           Print the current environment
   help          Help about any command
   trigger-input Triggers a pipeline input
